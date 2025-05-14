@@ -1,9 +1,14 @@
-
-const { sql_create_table } = require("../../libraries/sql/create");
+const { clappybot } = require("../../main")
+const { Template } = require("./models/Template")
+const { User } = require("./models/User")
 
 async function init_module(connection)
 {
-	await sql_create_table(connection, "template", "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(32), description VARCHAR(2000)");
+	Template.use(clappybot.database)
+	Template.init()
+
+	User.use(clappybot.database)
+	User.init()
 }
 
 module.exports = {
