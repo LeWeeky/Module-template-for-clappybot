@@ -35,7 +35,7 @@ async function parse(interaction, cmd, args)
 	const row2 = new ActionRowBuilder()
 	.setComponents(
 		new StringSelectMenuBuilder()
-		.setCustomId("template-test")
+		.setCustomId("template-example")
 		.setOptions([
 			{
 				label:
