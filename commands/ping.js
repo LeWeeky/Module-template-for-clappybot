@@ -4,13 +4,21 @@ async function parse(interaction, cmd, args)
 {
 	if (interaction.options)
 	{
-		// Commande slash (/command)
-		interaction.reply({content: "pong!"})
+		// Commande slash (/ping)
+		const sent = await interaction.reply({ content: "Pong !", fetchReply: true });
+		const latency = sent.createdTimestamp - interaction.createdTimestamp;
+		const apiPing = Math.round(interaction.client.ws.ping);
+		
+		await interaction.editReply(`🏓 Latence : ${latency}ms\n📡 Ping API : ${apiPing}ms`);
 	}
 	else
 	{
-		// Commande classique (+command)
-		interaction.channel.send({content: "pong!"})
+		// Commande classique (+ping)
+		const sent = await interaction.channel.send({ content: "Pong !" });
+		const latency = sent.createdTimestamp - Date.now();
+		const apiPing = Math.round(interaction.client.ws.ping);
+		
+		sent.edit(`🏓 Latence : ${-latency}ms\n📡 Ping API : ${apiPing}ms`);
 	}
 }
 
@@ -19,7 +27,8 @@ module.exports = {
 	name: "ping",
 	permissions: [],
 	builder: new SlashCommandBuilder()
-	.setName("ping")
-	.setDescription("Empty example command."),
-	any_guild: false
-}
+		.setName("ping")
+		.setDescription("Affiche la latence du bot."),
+	any_guild: false,
+	dm: false
+};
