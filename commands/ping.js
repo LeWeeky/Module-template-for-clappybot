@@ -9,7 +9,7 @@ async function parse(interaction, cmd, args)
 		const latency = sent.createdTimestamp - interaction.createdTimestamp;
 		const apiPing = Math.round(interaction.client.ws.ping);
 		
-		await interaction.editReply(`🏓 Latence : ${latency}ms\n📡 Ping API : ${apiPing}ms`);
+		await interaction.editReply(`🏓 Latency : ${latency}ms\n📡 Ping API : ${apiPing}ms`);
 	}
 	else
 	{
@@ -18,7 +18,7 @@ async function parse(interaction, cmd, args)
 		const latency = sent.createdTimestamp - Date.now();
 		const apiPing = Math.round(interaction.client.ws.ping);
 		
-		sent.edit(`🏓 Latence : ${-latency}ms\n📡 Ping API : ${apiPing}ms`);
+		sent.edit(`🏓 Latency : ${-latency}ms\n📡 Ping API : ${apiPing}ms`);
 	}
 }
 
@@ -28,7 +28,7 @@ module.exports = {
 	permissions: [],
 	builder: new SlashCommandBuilder()
 		.setName("ping")
-		.setDescription("Affiche la latence du bot."),
+		.setDescription("Display reply and api latency."),
 	any_guild: false,
 	dm: false
 };
