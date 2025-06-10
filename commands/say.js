@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { clappybot } = require("../../../main");
 
 async function parse(interaction, cmd, args)
 {
@@ -11,8 +12,8 @@ async function parse(interaction, cmd, args)
 	else
 	{
 		// prefix
-		const message = args.join(" ");
-		if (!message) return interaction.channel.send("Please provide a message.");
+		const message = interaction.content.substring(clappybot.prefix.length + cmd.length).trimStart();
+		if (message.length == 0) return interaction.channel.send("Please provide a message.");
 		await interaction.channel.send(message);
 	}
 }
