@@ -1,8 +1,13 @@
-const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
+const { SlashCommandBuilder, PermissionsBitField, MessageFlags } = require("discord.js");
 const { clappybot } = require("../../../main");
+const { User } = require("../../../libraries/fetching/users");
+const { History } = require("../../../libraries/sanctions/history");
 
 async function parse(interaction, cmd, args)
 {
+	/**
+	 * @type {User}
+	 */
 	let target;
 	let reason;
 
@@ -15,9 +20,12 @@ async function parse(interaction, cmd, args)
 	else
 	{
 		// prefix
-		const mention = interaction.mentions.members.first();
-		if (!mention) return interaction.channel.send("Please mention a user to ban.");
-		target = mention;
+		if (args.length == 0)
+			return interaction.channel.send("Please mention a user to ban.");
+		target = new User()
+		await target.get(args[0]);
+		if (!target)
+			return interaction.channel.send(`❌ \`${args[0]}\` is not a valid user.`);
 		reason = interaction.content
 			.substring(clappybot.prefix.length + cmd.length)
 			.trimStart()
@@ -27,16 +35,17 @@ async function parse(interaction, cmd, args)
 			|| "No reason provided";
 	}
 
-	if (!target) return interaction.reply({ content: "❌ User not found.", ephemeral: true });
+	if (!target) return interaction.reply({ content: "❌ User not found.", flags: [MessageFlags.Ephemeral] });
 	if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-		return interaction.reply({ content: "❌ You don't have permission to ban members.", ephemeral: true });
+		return interaction.reply({ content: "❌ You don't have permission to ban members.", flags: [MessageFlags.Ephemeral] });
 	}
-	if (!target.bannable) {
-		return interaction.reply({ content: "❌ I can't ban this user.", ephemeral: true });
-	}
+	const member = interaction.guild.members.cache.get(target.id);
+	if (member && !member.bannable)
+		return interaction.reply({ content: "❌ I can't ban this user.", flags: [MessageFlags.Ephemeral] });
 
-	await target.ban({ reason });
-	await interaction.reply({ content: `✅ **${target.user.tag}** has been banned. Reason: ${reason}` });
+	await interaction.guild.members.ban(target.id, { reason: reason });
+	new History(target).add("ban", reason, interaction.member.user);
+	await interaction.reply({ content: `✅ **${target.name}** has been banned. Reason: ${reason}` });
 }
 
 module.exports = {
