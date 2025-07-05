@@ -1,13 +1,12 @@
 const { EmbedBuilder } = require("@discordjs/builders");
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require("discord.js");
-const { User } = require("../models/User");
-const { colors } = require("../../../libraries/colors");
+const { SlashCommandBuilder } = require("discord.js");
 const { getModelsRows } = require("../utils/getModelsRows");
+const { Colors } = require("clappybot");
 
 async function parse(interaction, cmd, args)
 {
 	const embed = new EmbedBuilder()
-	.setColor(colors.light_blue)
+	.setColor(Colors.light_blue)
 	.setDescription(
 		"# 📊 Let's work with Models!\n"+
 		"## ❓ What is a model\n"+

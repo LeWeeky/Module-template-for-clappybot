@@ -1,6 +1,5 @@
-const { colors } = require("../../../libraries/colors");
-const { EmbedBuilder } = require("../../../libraries/discord");
-const { clappybot } = require("../../../main");
+const { clappybot, Colors } = require("clappybot");
+const { EmbedBuilder } = require("discord.js");
 
 async function check(message)
 {
@@ -24,7 +23,7 @@ async function parse(message)
 		+"↬ Créateur : ["+process.env.AUTHOR+"]("+process.env.AUTHOR_URL+")"
 		)
 	.setFooter({text: "Plus d'infos via "+clappybot.prefix+process.env.MAIN_COMMAND})
-	.setColor(colors.none)
+	.setColor(Colors.none)
 
 	message.channel.send({embeds:[embed]})
 }

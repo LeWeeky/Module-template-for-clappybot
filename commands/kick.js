@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, MessageFlags } = require("discord.js");
-const { clappybot } = require("../../../main");
-const { History } = require("../../../libraries/sanctions/history");
-const { User } = require("../../../libraries/fetching/users");
+const { clappybot, History, UserPermissions, PermissionsBits } = require("clappybot");
+const { User } = require("clappybot/dist/libraries/fetching/users");
 
 async function parse(interaction, cmd, args)
 {
@@ -33,7 +32,10 @@ async function parse(interaction, cmd, args)
 
 	if (!target)
 		return interaction.reply({ content: "❌ User not found.", flags: [MessageFlags.Ephemeral]});
-	if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) 
+	const permissions = new UserPermissions(interaction.member.id, interaction.guild.id);
+	await permissions.refresh()
+	if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)
+		&& !permissions.has(PermissionsBits.Kick) && !permissions.has(PermissionsBits.Admin)) 
 		return interaction.reply({ content: "❌ You don't have permission to kick members.", flags: [MessageFlags.Ephemeral] });
 	const member = interaction.guild.members.cache.get(target.id);
 	if (!member)

@@ -1,5 +1,5 @@
+const { clappybot } = require("clappybot");
 const { SlashCommandBuilder } = require("discord.js");
-const { clappybot } = require("../../../main");
 
 async function parse(interaction, cmd, args)
 {

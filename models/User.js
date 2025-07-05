@@ -1,4 +1,4 @@
-const { AModel } = require("../../../libraries/models/AModel");
+const { AModel } = require("clappybot");
 
 class User extends AModel
 {

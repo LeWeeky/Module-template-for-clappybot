@@ -1,4 +1,4 @@
-const { clappybot } = require("../../main")
+const { clappybot } = require("clappybot")
 const { Template } = require("./models/Template")
 const { User } = require("./models/User")
 

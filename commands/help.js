@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("@discordjs/builders");
+const { Colors } = require("clappybot");
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { colors } = require("../../../libraries/colors");
 
 async function parse(interaction, cmd, args)
 {
@@ -21,7 +21,7 @@ async function parse(interaction, cmd, args)
 		"You can set a channel as \"support channel\" via the command `/setsupport`, "+
 		"this will allow the bot to keep you informed of changes and updates."
 	)
-	.setColor(colors.pink)
+	.setColor(Colors.pink)
 
 	const row = new ActionRowBuilder()
 	.setComponents(

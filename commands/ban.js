@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, MessageFlags } = require("discord.js");
-const { clappybot } = require("../../../main");
-const { User } = require("../../../libraries/fetching/users");
-const { History } = require("../../../libraries/sanctions/history");
+const { clappybot, History, UserPermissions, PermissionsBits } = require("clappybot");
+const { User } = require("clappybot/dist/libraries/fetching/users");
 
 async function parse(interaction, cmd, args)
 {
@@ -14,7 +13,7 @@ async function parse(interaction, cmd, args)
 	if (interaction.options)
 	{
 		// slashcmd
-		target = interaction.options.getMember("user");
+		target = interaction.options.getUser("user");
 		reason = interaction.options.getString("reason") || "No reason provided";
 	}
 	else
@@ -36,16 +35,19 @@ async function parse(interaction, cmd, args)
 	}
 
 	if (!target) return interaction.reply({ content: "❌ User not found.", flags: [MessageFlags.Ephemeral] });
-	if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+	const permissions = new UserPermissions(interaction.member.id, interaction.guild.id);
+	await permissions.refresh()
+	if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)
+		&& !permissions.has(PermissionsBits.Ban) && !permissions.has(PermissionsBits.Admin))
+	{
 		return interaction.reply({ content: "❌ You don't have permission to ban members.", flags: [MessageFlags.Ephemeral] });
 	}
 	const member = interaction.guild.members.cache.get(target.id);
 	if (member && !member.bannable)
 		return interaction.reply({ content: "❌ I can't ban this user.", flags: [MessageFlags.Ephemeral] });
-
 	await interaction.guild.members.ban(target.id, { reason: reason });
 	new History(target).add("ban", reason, interaction.member.user);
-	await interaction.reply({ content: `✅ **${target.name}** has been banned. Reason: ${reason}` });
+	await interaction.reply({ content: `✅ **${target.username}** has been banned. Reason: ${reason}` });
 }
 
 module.exports = {

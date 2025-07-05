@@ -1,6 +1,6 @@
 const { MessageFlags, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const { User } = require("../models/User");
-const { colors } = require("../../../libraries/colors");
+const { Colors } = require("clappybot");
 
 async function parse(interaction)
 {
@@ -19,7 +19,7 @@ async function parse(interaction)
 	else
 	{
 		const embed = new EmbedBuilder()
-		.setColor(colors.light_blue)
+		.setColor(Colors.light_blue)
 		.setFields([
 			{
 				name:

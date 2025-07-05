@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField, MessageFlags } = require("discord.js");
-const { clappybot } = require("../../../main");
-const { History } = require("../../../libraries/sanctions/history");
-const { User } = require("../../../libraries/fetching/users");
+const { clappybot, History } = require("clappybot");
+const { User } = require("clappybot/dist/libraries/fetching/users");
 
 async function parse(interaction, cmd, args)
 {
