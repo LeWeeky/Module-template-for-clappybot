@@ -5,8 +5,9 @@ async function parse(interaction, cmd, args)
 	if (interaction.options)
 	{
 		// Commande slash (/ping)
-		const sent = await interaction.reply({ content: "Pong !", fetchReply: true });
-		const latency = sent.createdTimestamp - interaction.createdTimestamp;
+		const response = await interaction.reply({ content: "Pong !", withResponse: true });
+		const { message } = response.resource;
+		const latency = message.createdTimestamp - interaction.createdTimestamp;
 		const apiPing = Math.round(interaction.client.ws.ping);
 		
 		await interaction.editReply(`🏓 Latency : ${latency}ms\n📡 Ping API : ${apiPing}ms`);
@@ -14,11 +15,11 @@ async function parse(interaction, cmd, args)
 	else
 	{
 		// Commande classique (+ping)
-		const sent = await interaction.channel.send({ content: "Pong !" });
-		const latency = sent.createdTimestamp - Date.now();
+		const message = await interaction.channel.send({ content: "Pong !" });
+		const latency = message.createdTimestamp - Date.now();
 		const apiPing = Math.round(interaction.client.ws.ping);
 		
-		sent.edit(`🏓 Latency : ${-latency}ms\n📡 Ping API : ${apiPing}ms`);
+		message.edit(`🏓 Latency : ${-latency}ms\n📡 Ping API : ${apiPing}ms`);
 	}
 }
 
