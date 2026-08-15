@@ -1,19 +1,17 @@
-const { MessageFlags } = require("discord.js");
+import { MessageFlags } from "discord.js";
 
-async function hasPermission(member)
-{
-	return (member.roles.cache.has("YOUR ADMIN ROLE HERE"))
+async function hasPermission(member) {
+  return member.roles.cache.has("YOUR ADMIN ROLE HERE");
 }
 
-async function parse(interaction)
-{
-	interaction.reply({content: "Yes, you have the permission!", flags: [MessageFlags.Ephemeral]})
+export async function parse(interaction) {
+  interaction.reply({
+    content: "Yes, you have the permission!",
+    flags: [MessageFlags.Ephemeral],
+  });
 }
 
-module.exports = {
-	parse,
-	customId: "template-forbidden",
-	permissions: [hasPermission],
-	any_guild: false,
-	dm: false
-}
+export const customId = "template-forbidden";
+export const permissions = [hasPermission];
+export const any_guild = false;
+export const dm = false;

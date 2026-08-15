@@ -1,14 +1,9 @@
-const { AModel } = require("clappybot");
+import { AModel } from "clappybot";
 
-class Template extends AModel
-{
-	static table = 'templates';
-	static fields = {
-		title: 'string',
-		description: 'text',
-	};
-}
-
-module.exports = {
-	Template
+export default class Template extends AModel {
+  static table = "templates";
+  static fields = {
+    title: "string",
+    description: "text",
+  };
 }

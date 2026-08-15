@@ -1,19 +1,13 @@
-async function check(member)
-{
-	return (!member.bot)
+async function check(member) {
+  return !member.bot;
 }
 
-async function parse(member)
-{
-	console.log("new member:", member.user.username)
+export async function parse(member) {
+  console.log("new member:", member.user.username);
 }
 
-module.exports = {
-	parse,
-	conditions: [
-		check
-	],
-	any_guild: false,
-	dm: false,
-	allow_bots: false
-}
+export const name = "join";
+export const conditions = [check];
+export const any_guild = false;
+export const dm = false;
+export const allow_bots = false;

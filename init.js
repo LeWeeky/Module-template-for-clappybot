@@ -1,16 +1,12 @@
-const { clappybot } = require("clappybot")
-const { Template } = require("./models/Template")
-const { User } = require("./models/User")
 
-async function init_module(connection)
-{
-	Template.use(clappybot.database)
-	Template.init()
+import { clappybot } from "clappybot";
+import Template from "./models/Template.js";
+import User from "./models/User.js";
 
-	User.use(clappybot.database)
-	User.init()
-}
+export async function init_module(connection) {
+  Template.use(clappybot.database);
+  Template.init();
 
-module.exports = {
-	init_module
+  User.use(clappybot.database);
+  User.init();
 }

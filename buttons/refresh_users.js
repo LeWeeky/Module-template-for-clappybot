@@ -1,17 +1,15 @@
-const { getModelsRows } = require("../utils/getModelsRows");
+import { getModelsRows } from "../utils/getModelsRows.js";
 
-async function parse(interaction)
-{
-	const wait = interaction.deferUpdate();
-	const rows = await getModelsRows();
+export async function parse(interaction) {
+  const [wait, rows] = await Promise.all([
+    interaction.deferUpdate(),
+    getModelsRows()
+  ]);
 
-	await wait;
-	interaction.editReply({components: rows})
+  await interaction.editReply({ components: rows });
 }
 
-module.exports = {
-	parse,
-	customId: "template-refresh-users",
-	any_guild: false,
-	dm: false
-}
+export const customId = "template-refresh-users";
+export const permissions = [];
+export const any_guild = false;
+export const dm = false;

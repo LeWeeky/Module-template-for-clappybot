@@ -1,14 +1,13 @@
-const { MessageFlags } = require("discord.js");
+import { MessageFlags } from "discord.js";
 
-async function parse(interaction)
-{
-	interaction.reply({content: "Yes, this simple button works!", flags: [MessageFlags.Ephemeral]})
+export async function parse(interaction) {
+  interaction.reply({
+    content: "Yes, this simple button works!",
+    flags: [MessageFlags.Ephemeral],
+  });
 }
 
-module.exports = {
-	parse,
-	customId: "template-simple",
-	permissions: [],
-	any_guild: false,
-	dm: false
-}
+export const customId = "template-simple";
+export const permissions = [];
+export const any_guild = false;
+export const dm = false;

@@ -1,20 +1,17 @@
-const { MessageFlags } = require("discord.js");
+import { MessageFlags } from "discord.js";
 
-async function parse(interaction)
-{
-	const favoriteColor = interaction.fields.getTextInputValue('favoriteColorInput');
-	const hobbies = interaction.fields.getTextInputValue('hobbiesInput');
+export async function parse(interaction) {
+  const favoriteColor =
+    interaction.fields.getTextInputValue("favoriteColorInput");
+  const hobbies = interaction.fields.getTextInputValue("hobbiesInput");
 
-	interaction.reply({
-		content: `I'm happy to know that your favorite color is **${favoriteColor}** and your hobbies are **${hobbies}**!`,
-		flags: [MessageFlags.Ephemeral]
-	})
+  await interaction.reply({
+    content: `I'm happy to know that your favorite color is **${favoriteColor}** and your hobbies are **${hobbies}**!`,
+    flags: [MessageFlags.Ephemeral],
+  });
 }
 
-module.exports = {
-	parse,
-	customId: "template-example",
-	permissions: [],
-	any_guild: false,
-	dm: false
-}
+export const customId = "template-example";
+export const permissions = [];
+export const any_guild = false;
+export const dm = false;
